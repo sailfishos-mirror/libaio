@@ -1,4 +1,4 @@
-/* io_getevents.c
+/*
    libaio Linux async I/O interface
    Copyright 2002 Red Hat, Inc.
 
@@ -16,20 +16,34 @@
    License along with this library; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  */
-#include <libaio.h>
-#include <errno.h>
-#include <stdlib.h>
-#include <time.h>
-#include "syscall.h"
-#include "aio_ring.h"
+#ifndef _AIO_RING_H
+#define _AIO_RING_H
 
-io_syscall5(int, __io_getevents_0_4, io_getevents, io_context_t, ctx, long, min_nr, long, nr, struct io_event *, events, struct timespec *, timeout)
+#define AIO_RING_MAGIC                  0xa10a10a1
 
-int io_getevents_0_4(io_context_t ctx, long min_nr, long nr, struct io_event * events, struct timespec * timeout)
+struct aio_ring {
+	unsigned        id;     /* kernel internal index number */
+	unsigned        nr;     /* number of io_events */
+	unsigned        head;
+	unsigned        tail;
+
+	unsigned        magic;
+	unsigned        compat_features;
+	unsigned        incompat_features;
+	unsigned        header_length;  /* size of aio_ring */
+};
+
+static inline int aio_ring_is_empty(io_context_t ctx, struct timespec *timeout)
 {
-	if (aio_ring_is_empty(ctx, timeout))
+	struct aio_ring *ring = (struct aio_ring *)ctx;
+
+	if (!ring || ring->magic != AIO_RING_MAGIC)
 		return 0;
-	return __io_getevents_0_4(ctx, min_nr, nr, events, timeout);
+	if (!timeout || timeout->tv_sec || timeout->tv_nsec)
+		return 0;
+	if (ring->head != ring->tail)
+		return 0;
+	return 1;
 }
 
-DEFSYMVER(io_getevents_0_4, io_getevents, 0.4)
+#endif /* _AIO_RING_H */
