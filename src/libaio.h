@@ -29,6 +29,7 @@ extern "C" {
 
 #include <sys/types.h>
 #include <string.h>
+#include <signal.h>
 
 struct timespec;
 struct sockaddr;
@@ -161,6 +162,9 @@ extern int io_destroy(io_context_t ctx);
 extern int io_submit(io_context_t ctx, long nr, struct iocb *ios[]);
 extern int io_cancel(io_context_t ctx, struct iocb *iocb, struct io_event *evt);
 extern int io_getevents(io_context_t ctx_id, long min_nr, long nr, struct io_event *events, struct timespec *timeout);
+extern int io_pgetevents(io_context_t ctx_id, long min_nr, long nr,
+		struct io_event *events, struct timespec *timeout,
+		sigset_t *sigmask);
 
 
 static inline void io_set_callback(struct iocb *iocb, io_callback_t cb)

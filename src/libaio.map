@@ -20,3 +20,8 @@ LIBAIO_0.4 {
 		io_getevents;
 		io_queue_wait;
 } LIBAIO_0.1;
+
+LIBAIO_0.5 {
+	global:
+		io_pgetevents;
+} LIBAIO_0.4;
