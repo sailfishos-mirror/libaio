@@ -28,7 +28,7 @@
 #elif defined(__sparc__)
 #include "syscall-sparc.h"
 #elif defined(__aarch64__)
-#include "syscall-arm64.h"
+#include "syscall-generic.h"
 #else
 #warning "using system call numbers from sys/syscall.h"
 #endif
