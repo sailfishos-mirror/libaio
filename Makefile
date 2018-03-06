@@ -1,8 +1,7 @@
 NAME=libaio
 SPECFILE=$(NAME).spec
 VERSION=$(shell awk '/Version:/ { print $$2 }' $(SPECFILE))
-RELEASE=$(shell awk '/Release:/ { print $$2 }' $(SPECFILE))
-CVSTAG = $(NAME)_$(subst .,-,$(VERSION))_$(subst .,-,$(RELEASE))
+TAG = $(NAME)-$(VERSION)
 RPMBUILD=$(shell `which rpmbuild >&/dev/null` && echo "rpmbuild" || echo "rpm")
 
 prefix=/usr
@@ -28,17 +27,10 @@ clean:
 	@$(MAKE) -C harness clean
 
 tag-archive:
-	@cvs -Q tag -F $(CVSTAG)
+	@git tag $(TAG)
 
-create-archive: tag-archive
-	@rm -rf /tmp/$(NAME)
-	@cd /tmp; cvs -Q -d $(CVSROOT) export -r$(CVSTAG) $(NAME) || echo GRRRrrrrr -- ignore [export aborted]
-	@mv /tmp/$(NAME) /tmp/$(NAME)-$(VERSION)
-	@cd /tmp; tar czSpf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)
-	@rm -rf /tmp/$(NAME)-$(VERSION)
-	@cp /tmp/$(NAME)-$(VERSION).tar.gz .
-	@rm -f /tmp/$(NAME)-$(VERSION).tar.gz 
-	@echo " "
+create-archive:
+	@git archive --prefix=$(NAME)-$(VERSION)/ -o $(NAME)-$(VERSION).tar.gz $(TAG)
 	@echo "The final archive is ./$(NAME)-$(VERSION).tar.gz."
 
 archive: clean tag-archive create-archive
