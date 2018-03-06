@@ -1,5 +1,5 @@
 Name: libaio
-Version: 0.3.110
+Version: 0.3.111
 Release: 1
 Summary: Linux-native asynchronous I/O access library
 License: LGPL
@@ -59,6 +59,22 @@ make install prefix=$RPM_BUILD_ROOT/usr \
 %attr(0644,root,root) %{_libdir}/libaio.a
 
 %changelog
+* Tue Mar  6 2018 Jeff Moyer <jmoyer@redhat.com> - 0.3.111-1
+- Add two new tests to the test harness (Jeff Moyer)
+- Generic arch dectection for padding defines (Nathan Rossi)
+- harness: don't hardcode page size (Jeff Moyer)
+- harness: add a test case for mremap (Jeff Moyer)
+- libaio: harness: fix build errors due to attribute warn_unused_result (Mauricio Faria de Oliveira)
+- libaio: harness: fix build error due to linker search order (Mauricio Faria de Oliveira)
+- harness: add test for allocating aio-max-nr ioctxs (Jeff Moyer)
+- Add support for preadv2/pwritev2 (Jeff Moyer)
+- syscall-generic: don't overwrite errno (Jeff Moyer)
+- syscall: get rid of custom syscall implementation (Jeff Moyer)
+- Change syscall-arm64.h to syscall-generic.h (Icenowy Zheng)
+- Use generic syscall number schema for RISC-V (Icenowy Zheng)
+- Add endian detection (LE) and bit width detection (32/64) for RISC-V (Icenowy Zheng)
+- Makefile: convert tag and archive targets to git (Jeff Moyer)
+
 * Fri Jul  5 2013 Jeff Moyer <jmoyer@redhat.com> - 0.3.110-1
 - Add suport for sparc and arm64 (Mike Frysinger and Jeff Moyer)
 - Add generic syscall fallbacks (Mike Frysinger)
