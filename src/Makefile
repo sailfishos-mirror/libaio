@@ -8,12 +8,17 @@ SO_CFLAGS=-shared $(CFLAGS)
 L_CFLAGS=$(CFLAGS)
 LINK_FLAGS=
 LINK_FLAGS+=$(LDFLAGS)
+ENABLE_SHARED ?= 1
 
 soname=libaio.so.1
 minor=0
 micro=1
 libname=$(soname).$(minor).$(micro)
-all_targets += libaio.a $(libname)
+all_targets += libaio.a
+
+ifeq ($(ENABLE_SHARED),1)
+all_targets += $(libname)
+endif
 
 all: $(all_targets)
 
@@ -55,9 +60,11 @@ $(libname): $(libaio_sobjs) libaio.map
 install: $(all_targets)
 	install -D -m 644 libaio.h $(includedir)/libaio.h
 	install -D -m 644 libaio.a $(libdir)/libaio.a
+ifeq ($(ENABLE_SHARED),1)
 	install -D -m 755 $(libname) $(libdir)/$(libname)
 	ln -sf $(libname) $(libdir)/$(soname)
 	ln -sf $(libname) $(libdir)/libaio.so
+endif
 
 $(libaio_objs): libaio.h
 
