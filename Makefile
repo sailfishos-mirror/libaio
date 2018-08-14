@@ -14,7 +14,7 @@ all:
 	@$(MAKE) -C src
 
 install:
-	@$(MAKE) -C src install prefix=$(prefix) includedir=$(includedir) libdir=$(libdir)
+	@$(MAKE) -C src install prefix=$(DESTDIR)$(prefix) includedir=$(DESTDIR)$(includedir) libdir=$(DESTDIR)$(libdir)
 
 check:
 	@$(MAKE) -C harness check
