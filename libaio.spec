@@ -1,5 +1,5 @@
 Name: libaio
-Version: 0.3.111
+Version: 0.3.112
 Release: 1
 Summary: Linux-native asynchronous I/O access library
 License: LGPL
@@ -36,9 +36,7 @@ make
 %install
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
 
-make install prefix=$RPM_BUILD_ROOT/usr \
- libdir=$RPM_BUILD_ROOT/%{_libdir} \
- root=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT prefix=/usr libdir=/%{_libdir}
 
 %clean
 [ "$RPM_BUILD_ROOT" != "/" ] && rm -rf $RPM_BUILD_ROOT
@@ -59,6 +57,11 @@ make install prefix=$RPM_BUILD_ROOT/usr \
 %attr(0644,root,root) %{_libdir}/libaio.a
 
 %changelog
+* Mon Oct 22 2018 Jeff Moyer <jmoyer@redhat.com> - 0.3.112-1
+- Add async poll support (Christoph Hellwig)
+- Use canonical DESTDIR= environment variable (Thomas Petazzoni)
+- Add ability to disable building the shared library (Thomas Petazzoni)
+
 * Tue Mar  6 2018 Jeff Moyer <jmoyer@redhat.com> - 0.3.111-1
 - Add two new tests to the test harness (Jeff Moyer)
 - Generic arch dectection for padding defines (Nathan Rossi)
