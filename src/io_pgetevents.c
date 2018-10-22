@@ -1,6 +1,6 @@
-/* io_getevents.c
+/*
    libaio Linux async I/O interface
-   Copyright 2002 Red Hat, Inc.
+   Copyright 2018 Christoph Hellwig.
 
    This library is free software; you can redistribute it and/or
    modify it under the terms of the GNU Lesser General Public
@@ -20,16 +20,37 @@
 #include <errno.h>
 #include <stdlib.h>
 #include <time.h>
+#include <signal.h>
 #include "syscall.h"
 #include "aio_ring.h"
 
-io_syscall5(int, __io_getevents_0_4, io_getevents, io_context_t, ctx, long, min_nr, long, nr, struct io_event *, events, struct timespec *, timeout)
+#ifdef __NR_io_pgetevents
+io_syscall6(int, __io_pgetevents, io_pgetevents, io_context_t, ctx, long,
+		min_nr, long, nr, struct io_event *, events,
+		struct timespec *, timeout, void *, sigmask);
 
-int io_getevents_0_4(io_context_t ctx, long min_nr, long nr, struct io_event * events, struct timespec * timeout)
+int io_pgetevents(io_context_t ctx, long min_nr, long nr,
+		struct io_event *events, struct timespec *timeout,
+		sigset_t *sigmask)
 {
+	struct {
+		unsigned long ss;
+		unsigned long ss_len;
+	} data;
+
 	if (aio_ring_is_empty(ctx, timeout))
 		return 0;
-	return __io_getevents_0_4(ctx, min_nr, nr, events, timeout);
-}
 
-DEFSYMVER(io_getevents_0_4, io_getevents, 0.4)
+	data.ss = (unsigned long)sigmask;
+	data.ss_len = _NSIG / 8;
+	return __io_pgetevents(ctx, min_nr, nr, events, timeout, &data);
+}
+#else
+int io_pgetevents(io_context_t ctx, long min_nr, long nr,
+		struct io_event *events, struct timespec *timeout,
+		sigset_t *sigmask)
+
+{
+	return -ENOSYS;
+}
+#endif /* __NR_io_pgetevents */

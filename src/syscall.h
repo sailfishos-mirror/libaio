@@ -64,3 +64,10 @@ _body_io_syscall(sname, (long)arg1, (long)arg2, (long)arg3, (long)arg4)
 #define io_syscall5(type,fname,sname,type1,arg1,type2,arg2,type3,arg3,type4,arg4, type5,arg5) \
 type fname (type1 arg1,type2 arg2,type3 arg3,type4 arg4,type5 arg5) \
 _body_io_syscall(sname, (long)arg1, (long)arg2, (long)arg3, (long)arg4, (long)arg5)
+
+#define io_syscall6(type,fname,sname,type1,arg1,type2,arg2,type3,arg3, \
+		type4,arg4,type5,arg5,type6,arg6) \
+type fname (type1 arg1,type2 arg2,type3 arg3,type4 arg4,type5 arg5, \
+		type6 arg6) \
+_body_io_syscall(sname, (long)arg1, (long)arg2, (long)arg3, (long)arg4, \
+               (long)arg5, (long)arg6)

@@ -29,6 +29,7 @@ extern "C" {
 
 #include <sys/types.h>
 #include <string.h>
+#include <signal.h>
 
 struct timespec;
 struct sockaddr;
@@ -43,7 +44,7 @@ typedef enum io_iocb_cmd {
 	IO_CMD_FSYNC = 2,
 	IO_CMD_FDSYNC = 3,
 
-	IO_CMD_POLL = 5, /* Never implemented in mainline, see io_prep_poll */
+	IO_CMD_POLL = 5,
 	IO_CMD_NOOP = 6,
 	IO_CMD_PREADV = 7,
 	IO_CMD_PWRITEV = 8,
@@ -162,6 +163,9 @@ extern int io_destroy(io_context_t ctx);
 extern int io_submit(io_context_t ctx, long nr, struct iocb *ios[]);
 extern int io_cancel(io_context_t ctx, struct iocb *iocb, struct io_event *evt);
 extern int io_getevents(io_context_t ctx_id, long min_nr, long nr, struct io_event *events, struct timespec *timeout);
+extern int io_pgetevents(io_context_t ctx_id, long min_nr, long nr,
+		struct io_event *events, struct timespec *timeout,
+		sigset_t *sigmask);
 
 
 static inline void io_set_callback(struct iocb *iocb, io_callback_t cb)
@@ -237,8 +241,6 @@ static inline void io_prep_pwritev2(struct iocb *iocb, int fd, const struct iove
 	iocb->u.c.offset = offset;
 }
 
-/* Jeff Moyer says this was implemented in Red Hat AS2.1 and RHEL3.
- * AFAICT, it was never in mainline, and should not be used. --RR */
 static inline void io_prep_poll(struct iocb *iocb, int fd, int events)
 {
         memset(iocb, 0, sizeof(*iocb));
