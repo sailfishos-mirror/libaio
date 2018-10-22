@@ -139,7 +139,7 @@ int test_main(void)
 			printf("parent: io_pgetevents reports wrong fd\n");
 			return 1;
 		}
-		if (ev.res != POLLIN) {
+		if ((ev.res & POLLIN) != POLLIN) {
 			printf("parent: io_pgetevents did not report readable fd\n");
 			return 1;
 		}
