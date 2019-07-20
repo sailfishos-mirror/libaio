@@ -108,13 +108,15 @@ test_main()
 	ret = io_submit(ctx, 1, &iocbp);
 
 	/*
-	 * io_submit will return -EINVAL if RWF_NOWAIT is not supported.
+	 * io_submit will return -EINVAL if RWF_NOWAIT is not supported by
+	 * the kernel, and EOPNOTSUPP if it's not supported by the fs.
 	 */
 	if (ret != 1) {
-		if (ret == -EINVAL) {
-			fprintf(stderr, "RWF_NOWAIT not supported by kernel.\n");
-			/* just return success */
-			return 0;
+		if (ret == -EINVAL || ret == -ENOTSUP) {
+			fprintf(stderr, "RWF_NOWAIT not supported by %s.\n",
+				ret == -EINVAL ? "kernel" : "file system");
+			/* skip this test */
+			return 3;
 		}
 		errno = -ret;
 		perror("io_submit");
