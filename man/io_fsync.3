@@ -7,7 +7,7 @@
 .TH io_fsync 3 2002-09-12 "Linux 2.4" Linux AIO"
 .SH NAME
 io_fsync \- Synchronize a file's complete in-core state with that on disk
-.SH SYNOPSYS
+.SH SYNOPSIS
 .nf
 .B #include <errno.h>
 .sp
@@ -58,7 +58,7 @@ referenced data outside of the program's accessible address space.
 .TP
 .B EINVAL
 .I ctx
-refers to an unitialized aio context, the iocb pointed to by 
+refers to an uninitialized aio context, the iocb pointed to by
 .I iocbs
 contains an improperly initialized iocb, 
 .TP
