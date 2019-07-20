@@ -1,7 +1,7 @@
 .\"/* io_getevents:
 .\" *      Attempts to read at least min_nr events and up to nr events from
-.\" *      the completion queue for the aio_context specified by ctx_id.  May
-.\" *      fail with -EINVAL if ctx_id is invalid, if min_nr is out of range,
+.\" *      the completion queue for the aio_context specified by ctx.  May
+.\" *      fail with -EINVAL if ctx is invalid, if min_nr is out of range,
 .\" *      if nr is out of range, if when is out of range.  May fail with
 .\" *      -EFAULT if any of the memory specified to is invalid.  May return
 .\" *      0 or < min_nr if no events are available and the timeout specified
@@ -10,7 +10,7 @@
 .\" *      will be updated if not NULL and the operation blocks.  Will fail
 .\" *      with -ENOSYS if not implemented.
 .\" */
-.\"asmlinkage long sys_io_getevents(io_context_t ctx_id,
+.\"asmlinkage long sys_io_getevents(io_context_t ctx,
 .\"                                 long min_nr,
 .\"                                 long nr,
 .\"                                 struct io_event *events,
@@ -117,7 +117,7 @@ behaves the same as
 .TP
 .B EINVAL 
 If
-.I ctx_id
+.I ctx
 is invalid, if
 .I min_nr
 is out of range, if

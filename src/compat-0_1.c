@@ -49,14 +49,14 @@ int compat0_1_io_queue_wait(io_context_t ctx, struct timespec *when)
 
 /* ABI change.  Provide backwards compatibility for this one. */
 SYMVER(compat0_1_io_getevents, io_getevents, 0.1);
-int compat0_1_io_getevents(io_context_t ctx_id, long nr,
+int compat0_1_io_getevents(io_context_t ctx, long nr,
 		       struct io_event *events,
 		       const struct timespec *const_timeout)
 {
 	struct timespec timeout;
 	if (const_timeout)
 		timeout = *const_timeout;
-	return io_getevents(ctx_id, 1, nr, events,
+	return io_getevents(ctx, 1, nr, events,
 			const_timeout ? &timeout : NULL);
 }
 
