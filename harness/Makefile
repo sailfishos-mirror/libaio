@@ -6,7 +6,7 @@ PROGS:=$(PARTPROGS) $(EXTRAPROGS)
 HARNESS_SRCS:=main.c
 # io_queue.c
 
-CFLAGS+=-Wall -Werror -I../src -g -O2 -DPAGE_SIZE=$(shell getconf PAGESIZE)
+CFLAGS+=-Wall -Werror -I../src -g -O2
 #-lpthread -lrt
 
 # Change this on the build line to run tests against the installed libraries:
