@@ -1,10 +1,10 @@
-./" static inline void io_prep_fsync(struct iocb *iocb, int fd)
-./" {
-./" 	memset(iocb, 0, sizeof(*iocb));
-./" 	iocb->aio_fildes = fd;
-./" 	iocb->aio_lio_opcode = IO_CMD_FSYNC;
-./" 	iocb->aio_reqprio = 0;
-./" }
+.\" static inline void io_prep_fsync(struct iocb *iocb, int fd)
+.\" {
+.\" 	memset(iocb, 0, sizeof(*iocb));
+.\" 	iocb->aio_fildes = fd;
+.\" 	iocb->aio_lio_opcode = IO_CMD_FSYNC;
+.\" 	iocb->aio_reqprio = 0;
+.\" }
 .TH io_prep_fsync 3 2002-09-12 "Linux 2.4" Linux AIO"
 .SH NAME
 io_prep_fsync \- Synchronize a file's complete in-core state with that on disk

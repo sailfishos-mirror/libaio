@@ -1,13 +1,13 @@
-./" static inline void io_prep_pread(struct iocb *iocb, int fd, void *buf, size_t count, long long offset)
-./" {
-./" 	memset(iocb, 0, sizeof(*iocb));
-./" 	iocb->aio_fildes = fd;
-./" 	iocb->aio_lio_opcode = IO_CMD_PREAD;
-./" 	iocb->aio_reqprio = 0;
-./" 	iocb->u.c.buf = buf;
-./" 	iocb->u.c.nbytes = count;
-./" 	iocb->u.c.offset = offset;
-./" }
+.\" static inline void io_prep_pread(struct iocb *iocb, int fd, void *buf, size_t count, long long offset)
+.\" {
+.\" 	memset(iocb, 0, sizeof(*iocb));
+.\" 	iocb->aio_fildes = fd;
+.\" 	iocb->aio_lio_opcode = IO_CMD_PREAD;
+.\" 	iocb->aio_reqprio = 0;
+.\" 	iocb->u.c.buf = buf;
+.\" 	iocb->u.c.nbytes = count;
+.\" 	iocb->u.c.offset = offset;
+.\" }
 .TH io_prep_pread 3 2002-09-12 "Linux 2.4" Linux AIO"
 .SH NAME
 io_prep_pread \- Set up asynchronous read
