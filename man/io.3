@@ -10,16 +10,18 @@ io \- Asynchronous IO
 .sp
 .fi
 .SH DESCRIPTION
-The libaio library defines a new set of I/O operations which can
+The
+.B libaio
+library defines a new set of I/O operations which can
 significantly reduce the time an application spends waiting at I/O.  The
 new functions allow a program to initiate one or more I/O operations and
 then immediately resume normal work while the I/O operations are
 executed in parallel.  
 
 These functions are part of the library with realtime functions named
-.IR libaio .
+.BR libaio .
 They are not actually part of the
-.IR "libc" 
+.B libc
 binary.
 The implementation of these functions can be done using support in the
 kernel.
@@ -27,9 +29,9 @@ kernel.
 All IO operations operate on files which were opened previously.  There
 might be arbitrarily many operations running for one file.  The
 asynchronous I/O operations are controlled using a data structure named
-.IR "struct iocb"
+.B struct iocb
 It is defined in
-.IR "libaio.h"
+.I libaio.h
 as follows.
 
 .nf
@@ -74,7 +76,7 @@ struct iocb {
 
 .fi
 .TP
-.IR "int aio_fildes"
+.BI int " aio_fildes"
 This element specifies the file descriptor to be used for the
 operation.  It must be a legal descriptor, otherwise the operation will
 fail.
@@ -82,55 +84,55 @@ fail.
 The device on which the file is opened must allow the seek operation.
 I.e., it is not possible to use any of the IO operations on devices
 like terminals where an 
-.IR "lseek"
+.BR lseek (2)
 call would lead to an error.
 .TP
-.IR "long u.c.offset"
+.BI long " u.c.offset"
 This element specifies the offset in the file at which the operation (input
 or output) is performed.  Since the operations are carried out in arbitrary
 order and more than one operation for one file descriptor can be
 started, one cannot expect a current read/write position of the file
 descriptor.
 .TP
-.IR "void *buf"
+.BI "void *" buf
 This is a pointer to the buffer with the data to be written or the place
 where the read data is stored.
 .TP
-.IR "long u.c.nbytes"
+.BI long " u.c.nbytes"
 This element specifies the length of the buffer pointed to by 
 .IR io_buf .
 .TP
-.IR "int aio_reqprio"
+.BI int " aio_reqprio"
 Is not currently used.
 .TP
 .B "IO_CMD_PREAD"
 Start a read operation.  Read from the file at position
-.IR "u.c.offset"
+.I u.c.offset
 and store the next 
-.IR "u.c.nbytes"
+.I u.c.nbytes
 bytes in the
 buffer pointed to by 
 .IR buf .
 .TP
 .B "IO_CMD_PWRITE"
 Start a write operation.  Write 
-.IR "u.c.nbytes" 
+.I u.c.nbytes
 bytes starting at
-.IR "buf"
+.I buf
 into the file starting at position 
 .IR u.c.offset .
 .TP
 .B "IO_CMD_NOP"
 Do nothing for this control block.  This value is useful sometimes when
 an array of 
-.IR "struct iocb"
+.B struct iocb
 values contains holes, i.e., some of the
 values must not be handled although the whole array is presented to the
-.IR "io_submit"
+.BR io_submit (3)
 function.
 .TP 
 .B "IO_CMD_FSYNC"
-.TP
+.TQ
 .B "IO_CMD_POLL"
 This is experimental.
 .SH EXAMPLE

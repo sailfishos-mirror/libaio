@@ -9,17 +9,19 @@ io_queue_run \- Handle completed io requests
 .B #include <libaio.h>
 .br
 .sp
-.BI "int io_queue_run(io_context_t  ctx );"
+.BI "int io_queue_run(io_context_t " ctx ");"
 .sp
 .fi
 .SH DESCRIPTION
-.B io_queue_run
-Attempts to read all the events from
-the completion queue for the aio_context specified by ctx_id.
+.BR io_queue_run ()
+attempts to read all the events from
+the completion queue for the aio_context specified by
+.IR ctx_id .
 .SH "RETURN VALUES"
 May return
-0 if no events are available.
-Will fail with -ENOSYS if not implemented.
+.B 0
+if no events are available.
+Will fail with -\fBENOSYS\fP if not implemented.
 .SH ERRORS
 .TP
 .B EFAULT
@@ -28,7 +30,9 @@ referenced data outside of the program's accessible address space.
 .TP
 .B EINVAL
 .I ctx 
-refers to an uninitialized aio context, the iocb pointed to by
+refers to an uninitialized aio context, the
+.I iocb
+pointed to by
 .I iocbs 
 contains an improperly initialized iocb.
 .TP

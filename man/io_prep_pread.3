@@ -19,7 +19,7 @@ io_prep_pread \- Set up asynchronous read
 .B #include <libaio.h>
 .br
 .sp
-.BI "inline void io_prep_pread(struct iocb *iocb, int fd, void *buf, size_t count, long long offset)
+.BI "inline void io_prep_pread(struct iocb *" iocb ", int " fd ", void *" buf ", size_t " count ", long long " offset ");"
 .
 .sp
 struct iocb {
@@ -31,32 +31,27 @@ struct iocb {
 };
 .fi
 .SH DESCRIPTION
-.IR io_prep_pread 
+.BR io_prep_pread ()
 is an inline convenience function designed to facilitate the initialization of
 the iocb for an asynchronous read operation.
 
 The first
-.TP
-.IR "iocb->u.c.nbytes = count"
+.I iocb->u.c.nbytes = count
 bytes of the file for which
-.TP
-.IR "iocb->aio_fildes = fd"
+.I iocb->aio_fildes = fd
 is a descriptor are written to the buffer
 starting at
-.TP
 .IR "iocb->u.c.buf = buf" .
-.br
 Reading starts at the absolute position
-.TP
-.IR "ioc->u.c.offset = offset"
+.I ioc->u.c.offset = offset
 in the file.
 .PP
 This function returns immediately. To schedule the operation, the
 function 
-.IR io_submit
+.BR io_submit (3)
 must be called.
 .PP
-Simultaneous asynchronous operations using the same iocb produce
+Simultaneous asynchronous operations using the same \fIiocb\fP produce
 undefined results.
 .SH "RETURN VALUES"
 None.

@@ -32,21 +32,21 @@ struct iocb {
 };
 .fi
 .SH DESCRIPTION
-.B io_submit
+.BR io_submit ()
 submits
 .I nr
 iocbs for processing for a given io context ctx.
 
 The 
-.IR "io_submit"
+.BR io_submit ()
 function can be used to enqueue an arbitrary
 number of read and write requests at one time.  The requests can all be
 meant for the same file, all for different files or every solution in
 between.
 
-.IR "io_submit"
+.BR io_submit ()
 gets the 
-.IR "nr"
+.I nr
 requests from the array pointed to
 by 
 .IR "iocbs" .
@@ -75,10 +75,10 @@ in which case this element of
 .IR "iocbs"
 is simply ignored.  This
 ``operation'' is useful in situations where one has a fixed array of
-.IR "struct iocb"
+.B struct iocb
 elements from which only a few need to be handled at
 a time.  Another situation is where the 
-.IR "io_submit"
+.BR io_submit (3)
 call was
 canceled before all requests are processed  and the remaining requests have to be reissued.
 
@@ -86,15 +86,15 @@ The other members of each element of the array pointed to by
 .IR "iocbs"
 must have values suitable for the operation as described in
 the documentation for 
-.IR "io_prep_pread"
+.BR io_prep_pread (3)
 and 
-.IR "io_prep_pwrite"
+.BR io_prep_pwrite (3)
 above.
 
 The function returns immediately after
 having enqueued all the requests.  
 On success,
-.B io_submit
+.BR io_submit ()
 returns the number of iocbs submitted successfully.  Otherwise, -error is return, where 
 error is one of the Exxx values defined in the Errors section.
 .PP
@@ -115,10 +115,14 @@ refers to an uninitialized aio context, the iocb pointed to by
 contains an improperly initialized iocb, 
 .TP
 .B EBADF
-The iocb contains a file descriptor that does not exist.
+The
+.I iocb
+contains a file descriptor that does not exist.
 .TP
 .B EINVAL
-The file specified in the iocb does not support the given io operation.
+The file specified in the
+.I iocb
+does not support the given io operation.
 .SH "SEE ALSO"
 .BR io (3),
 .BR io_cancel (3),

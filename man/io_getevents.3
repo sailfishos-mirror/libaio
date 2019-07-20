@@ -42,19 +42,25 @@ struct io_event {
         unsigned        PADDED(res2, __pad4);
 };
 .sp
-.BI "int io_getevents(io_context_t " ctx ",  long " nr ", struct io_event *" events "[], struct timespec *" timeout ");"
-.BI "int io_pgetevents(io_context_t " ctx ",  long " nr ", struct io_event *" events "[], struct timespec *" timeout ", sigset_t *" sigmask ");"
+.BI "int io_getevents(io_context_t " ctx ", long " nr ", struct io_event *" events "[], struct timespec *" timeout ");"
+.BI "int io_pgetevents(io_context_t " ctx ", long " nr ", struct io_event *" events "[], struct timespec *" timeout ", sigset_t *" sigmask ");"
 .fi
 .SH DESCRIPTION
-Attempts to read  up to nr events from
-the completion queue for the aio_context specified by ctx.  
+Attempts to read up to
+.I nr
+events from the completion queue for the aio_context specified by
+.IR ctx .
 .SH "RETURN VALUES"
 May return
-0 if no events are available and the timeout specified
-by when has elapsed, where when == NULL specifies an infinite
+.B 0
+if no events are available and the timeout specified
+by when has elapsed, where
+.I when
+== NULL specifies an infinite
 timeout.  Note that the timeout pointed to by when is relative and
-will be updated if not NULL and the operation blocks.  Will fail
-with ENOSYS if not implemented.
+will be updated if not NULL and the operation blocks.  Will fail with
+.B ENOSYS
+if not implemented.
 .SS io_pgetevents()
 The relationship between
 .BR io_getevents ()
@@ -110,8 +116,15 @@ behaves the same as
 .SH ERRORS
 .TP
 .B EINVAL 
-If ctx_id is invalid, if min_nr is out of range,
-if nr is out of range, if when is out of range.  
+If
+.I ctx_id
+is invalid, if
+.I min_nr
+is out of range, if
+.I nr
+is out of range, if
+.I when
+is out of range.
 .TP
 .B EFAULT 
 If any of the memory specified to is invalid.

@@ -8,7 +8,7 @@ io_queue_release \- Release the context associated with the userspace handle
 .B #include <libaio.h>
 .br
 .sp
-.BI "int io_queue_release(io_context_t ctx)"
+.BI "int io_queue_release(io_context_t " ctx ");"
 .sp
 .SH DESCRIPTION
 .B io_queue_release
@@ -17,16 +17,21 @@ AIOs and block on completion.
 .
 .SH "RETURN VALUES"
 On success,
-.B io_queue_release
-returns 0.  Otherwise, -error is return, where
+.BR io_queue_release ()
+returns
+.BR 0 .
+Otherwise, -error is return, where
 error is one of the Exxx values defined in the Errors section.
 .SH ERRORS
 .TP
 .B EINVAL
 .I ctx 
-refers to an uninitialized aio context, the iocb pointed to by
+refers to an uninitialized aio context, the
+.I iocb
+pointed to by
 .I iocbs 
-contains an improperly initialized iocb,
+contains an improperly initialized
+.IR iocb .
 .TP
 .B ENOSYS 
 Not implemented.
@@ -44,4 +49,3 @@ Not implemented.
 .BR io_set_callback (3),
 .BR io_submit (3),
 .BR errno (3).
-

@@ -9,7 +9,7 @@ io_cancel \- Cancel io requests
 .B #include <libaio.h>
 .sp
 .br
-.BI "int io_cancel(io_context_t ctx, struct iocb *iocb)"
+.BI "int io_cancel(io_context_t " ctx ", struct iocb *" iocb ");"
 .br
 .sp
 struct iocb {
@@ -21,8 +21,11 @@ struct iocb {
 };
 .fi
 .SH DESCRIPTION
-Attempts to cancel an iocb previously passed to io_submit.  If
-the operation is successfully cancelled, the resulting event is
+Attempts to cancel an
+.I iocb
+previously passed to
+.BR io_submit (3).
+If the operation is successfully cancelled, the resulting event is
 copied into the memory pointed to by result without being placed
 into the completion queue.
 .PP
@@ -33,19 +36,23 @@ have to be overwritten soon.  As an example, assume an application, which
 writes data in files in a situation where new incoming data would have
 to be written in a file which will be updated by an enqueued request.
 .SH "RETURN VALUES"
-0 is returned on success, otherwise returns errno.
+\fI0\fP is returned on success, otherwise returns \fIerrno\fP.
 .SH ERRORS
 .TP
 .B EFAULT 
 If any of the data structures pointed to are invalid.
 .TP
 .B EINVAL 
-If aio_context specified by ctx_id is
-invalid.  
+If
+.I aio_context
+specified by
+.I ctx_id
+is invalid.
 .TP
 .B EAGAIN
-If the iocb specified was not
-cancelled.  
+If the
+.I iocb
+specified was not cancelled.
 .TP
 .B ENOSYS 
 If not implemented.

@@ -10,25 +10,31 @@ io_queue_init \- Initialize asynchronous io state machine
 .B #include <libaio.h>
 .br
 .sp
-.BI "int io_queue_init(int maxevents, io_context_t  *ctx );"
+.BI "int io_queue_init(int " maxevents ", io_context_t *" ctx ");"
 .sp
 .fi
 .SH DESCRIPTION
-.B io_queue_init
-Attempts to create an aio context capable of receiving at least 
-.IR maxevents
+.BR io_queue_init ()
+attempts to create an aio context capable of receiving at least
+.I maxevents
 events. 
-.IR ctx
+.I ctx
 must point to an aio context that already exists and must be initialized
 to 
-.IR 0
+.B 0
 before the call.
-If the operation is successful, *cxtp is filled with the resulting handle.
+If the operation is successful,
+.I *cxtp
+is filled with the resulting handle.
 .SH "RETURN VALUES"
 On success,
-.B io_queue_init
-returns 0.  Otherwise, -error is return, where
-error is one of the Exxx values defined in the Errors section.
+.BR io_queue_init ()
+returns
+.BR 0 .
+Otherwise, -error is return, where
+error is one of the Exxx values defined in the
+.B ERRORS
+section.
 .SH ERRORS
 .TP
 .B EFAULT
@@ -37,7 +43,9 @@ referenced data outside of the program's accessible address space.
 .TP
 .B EINVAL
 .I maxevents
-is <= 0 or 
+is <=
+.B 0
+or
 .IR ctx
 is an invalid memory location.
 .TP
@@ -46,7 +54,9 @@ Not implemented.
 .TP
 .B EAGAIN
 .IR "maxevents > max_aio_reqs"
-where max_aio_reqs is a tunable value.
+where
+.I max_aio_reqs
+is a tunable value.
 .SH "SEE ALSO"
 .BR io (3),
 .BR io_cancel (3),

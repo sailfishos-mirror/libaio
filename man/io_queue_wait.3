@@ -9,22 +9,27 @@ io_queue_wait \- Wait for io requests to complete
 .B #include <libaio.h>
 .br
 .sp
-.BI "int io_queue_wait(io_context_t ctx, const struct timespec *timeout);"
+.BI "int io_queue_wait(io_context_t " ctx ", const struct timespec *" timeout ");"
 .fi
 .SH DESCRIPTION
-Attempts to read an event from
-the completion queue for the aio_context specified by ctx_id.
+.BR io_queue_wait ()
+attempts to read an event from
+the completion queue for the aio_context specified by
+.IR ctx_id .
 .SH "RETURN VALUES"
 May return
-0 if no events are available and the timeout specified
+.B 0
+if no events are available and the timeout specified
 by when has elapsed, where when == NULL specifies an infinite
-timeout.  Note that the timeout pointed to by when is relative and
+\fItimeout\fP.  Note that the \fItimeout\fP pointed to by when is relative and
 will be updated if not NULL and the operation blocks.  Will fail
-with -ENOSYS if not implemented.
+with -\fBENOSYS\fP if not implemented.
 .SH "RETURN VALUES"
 On success,
-.B io_queue_wait
-returns 0.  Otherwise, -error is return, where
+.BR io_queue_wait ()
+returns
+.BR 0 .
+Otherwise, -error is return, where
 error is one of the Exxx values defined in the Errors section.
 .SH ERRORS
 .TP
@@ -34,7 +39,9 @@ referenced data outside of the program's accessible address space.
 .TP
 .B EINVAL
 .I ctx 
-refers to an uninitialized aio context, the iocb pointed to by
+refers to an uninitialized aio context, the
+.I iocb
+pointed to by
 .I iocbs 
 contains an improperly initialized iocb.
 .TP
