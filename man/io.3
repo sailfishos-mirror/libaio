@@ -6,7 +6,7 @@ io \- Asynchronous IO
 .B #include <errno.h>
 .sp
 .br 
-.B #include <libio.h>
+.B #include <libaio.h>
 .sp
 .fi
 .SH DESCRIPTION
@@ -29,7 +29,7 @@ might be arbitrarily many operations running for one file.  The
 asynchronous I/O operations are controlled using a data structure named
 .IR "struct iocb"
 It is defined in
-.IR "libio.h"
+.IR "libaio.h"
 as follows.
 
 .nf
