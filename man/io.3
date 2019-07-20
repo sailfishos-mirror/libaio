@@ -17,8 +17,8 @@ then immediately resume normal work while the I/O operations are
 executed in parallel.  
 
 These functions are part of the library with realtime functions named
-.IR "libaio"
-.  They are not actually part of the 
+.IR libaio .
+They are not actually part of the
 .IR "libc" 
 binary.
 The implementation of these functions can be done using support in the
@@ -98,8 +98,7 @@ where the read data is stored.
 .TP
 .IR "long u.c.nbytes"
 This element specifies the length of the buffer pointed to by 
-.IR "io_buf"
-.
+.IR io_buf .
 .TP
 .IR "int aio_reqprio"
 Is not currently used.
@@ -111,8 +110,7 @@ and store the next
 .IR "u.c.nbytes"
 bytes in the
 buffer pointed to by 
-.IR "buf"
-.
+.IR buf .
 .TP
 .B "IO_CMD_PWRITE"
 Start a write operation.  Write 
@@ -120,8 +118,7 @@ Start a write operation.  Write
 bytes starting at
 .IR "buf"
 into the file starting at position 
-.IR "u.c.offset"
-.
+.IR u.c.offset .
 .TP
 .B "IO_CMD_NOP"
 Do nothing for this control block.  This value is useful sometimes when

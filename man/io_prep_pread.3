@@ -44,15 +44,14 @@ bytes of the file for which
 is a descriptor are written to the buffer
 starting at
 .TP
-.IR "iocb->u.c.buf = buf"
-.
+.IR "iocb->u.c.buf = buf" .
 .br
 Reading starts at the absolute position
 .TP
 .IR "ioc->u.c.offset = offset"
 in the file.
 .PP
-This function returns immediately . To schedule the operation, the
+This function returns immediately. To schedule the operation, the
 function 
 .IR io_submit
 must be called.
