@@ -38,15 +38,21 @@ struct aio_ring {
 int
 open_temp_file(void)
 {
-	int fd;
+	int fd, flags;
 	char template[sizeof(TEMPLATE)];
 
 	strncpy(template, TEMPLATE, sizeof(template));
-	fd = mkostemp(template, O_DIRECT);
+	fd = mkstemp(template);
 	if (fd < 0) {
 		perror("mkstemp");
 		exit(1);
 	}
+	/*
+	 * O_DIRECT is desirable, but not required for this test.
+	 */
+	flags = fcntl(F_GETFL, 0);
+	fcntl(F_SETFL, flags | O_DIRECT);
+
 	unlink(template);
 	return fd;
 }

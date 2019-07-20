@@ -53,6 +53,8 @@ aio_worker(void *ptr)
 	assert(buffer != NULL);
 
 	fd = open(FILENAME, O_DIRECT|O_RDONLY);
+	if (fd < 0 && errno == EINVAL)
+		exit(3); /* skip this test, O_DIRECT is unavailable */
 	assert(fd >= 0);
 
 	for (i = 0; i < 1000; i++) {

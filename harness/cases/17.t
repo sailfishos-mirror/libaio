@@ -119,7 +119,7 @@ void prune(io_context_t io_ctx, int max_ios, int getevents_type)
 
 void run_test(int max_ios, int getevents_type)
 {
-	int fd, ret;
+	int fd, ret, flags;
 	long i, to_submit;
 	struct iocb **iocb_sub;
 	io_context_t io_ctx;
@@ -137,8 +137,15 @@ void run_test(int max_ios, int getevents_type)
 	events = calloc(max_ios, sizeof(*events));
 
 	unlink(filename);
-	fd = open(filename, O_CREAT | O_RDWR | O_DIRECT, 0644);
+	fd = open(filename, O_CREAT | O_RDWR, 0644);
 	assert(fd >= 0);
+
+	/*
+	 * Use O_DIRECT if it's available.  If it's not, the test code
+	 * will still operate correctly, just potentially slower.
+	 */
+	flags = fcntl(fd, F_GETFL, 0);
+	fcntl(fd, F_SETFL, flags | O_DIRECT);
 
 	ret = ftruncate(fd, max_ios * io_size);
 	assert(!ret);

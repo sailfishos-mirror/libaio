@@ -92,7 +92,10 @@ test_main()
 	 */
 	flags = fcntl(fd, F_GETFL);
 	ret = fcntl(fd, F_SETFL, flags | O_DIRECT);
-	if (ret != 0) {
+	if (ret < 0) {
+		/* SKIP this test if O_DIRECT is not available on this fs */
+		if (errno == EINVAL)
+			return 3;
 		perror("fcntl");
 		return 1;
 	}
