@@ -47,18 +47,15 @@ between.
 .BR io_submit ()
 gets the 
 .I nr
-requests from the array pointed to
-by 
+requests from the array pointed to by
 .IR "iocbs" .
 The operation to be performed is determined by the
 .IR "aio_lio_opcode"
 member in each element of 
 .IR "iocbs" .
-If this
-field is 
+If this field is
 .B "IO_CMD_PREAD"
-a read operation is enqueued, similar to a call
-of 
+a read operation is enqueued, similar to a call of
 .IR "io_prep_pread"
 for this element of the array (except that the way
 the termination is signalled is different, as we will see below).  If
