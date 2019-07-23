@@ -17,3 +17,5 @@ done
 
 echo "Pass: $passes  Fail: $fails"
 echo "Test run complete at" `date`
+
+exit $fails
