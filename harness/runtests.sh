@@ -2,6 +2,7 @@
 
 passes=0
 fails=0
+skips=0
 
 echo "Test run starting at" `date`
 
@@ -11,11 +12,20 @@ while [ $# -ge 1 ] ; do
 	echo "Starting $this_test"
 	$this_test 2>&1
 	res=$?
-	if [ $res -eq 0 ] ; then str="" ; passes=$[passes + 1] ; else str=" -- FAILED" ; fails=$[fails + 1] ; fi
+	if [ $res -eq 0 ]; then
+		str="";
+		passes=$((passes + 1));
+	elif [ $res -eq 3 ]; then
+		str=" -- SKIPPED";
+		skips=$((skips + 1));
+	else
+		str=" -- FAILED"
+		fails=$((fails + 1));
+	fi
 	echo "Completed $this_test with $res$str".
 done
 
-echo "Pass: $passes  Fail: $fails"
+echo "Pass: $passes  Fail: $fails  Skip: $skips"
 echo "Test run complete at" `date`
 
 exit $fails

@@ -26,15 +26,27 @@ char test_name[] = TEST_NAME;
 int main(void)
 {
 	int res;
+	const char *test_result;
 
 #if defined(SETUP)
 	SETUP;
 #endif
 
 	res = test_main();
-	printf("test %s completed %s.\n", test_name, 
-		res ? "FAILED" : "PASSED"
-		);
+	switch(res) {
+	case 0:
+		test_result = "PASSED";
+		break;
+	case 3:
+		test_result = "SKIPPED";
+		break;
+	default:
+		test_result = "FAILED";
+		res = 1;
+		break;
+	}
+
+	printf("test %s completed %s.\n", test_name, test_result);
 	fflush(stdout);
-	return res ? 1 : 0;
+	return res;
 }
