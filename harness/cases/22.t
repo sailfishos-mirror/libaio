@@ -83,6 +83,9 @@ int test_main(void)
 		io_prep_poll(&iocb, pipe1[0], POLLIN);
 		ret = io_submit(ctx, 1, iocbs);
 		if (ret != 1) {
+			/* if poll isn't supported, skip the test */
+			if (ret == -EINVAL)
+				return 3;
 			printf("child: io_submit failed\n");
 			return 1;
 		}
@@ -120,7 +123,10 @@ int test_main(void)
 
 		ret = io_submit(ctx, 1, iocbs);
 		if (ret != 1) {
-			printf("parent: io_submit failed\n");
+			/* if poll isn't supported, skip the test */
+			if (ret == -EINVAL)
+				return 3;
+			printf("parent: io_submit failed with %d\n", ret);
 			return 1;
 		}
 
@@ -147,3 +153,9 @@ int test_main(void)
 		return 0;
 	}
 }
+/*
+ * Local variables:
+ *  mode: c
+ *  c-basic-offset: 8
+ * End:
+ */
