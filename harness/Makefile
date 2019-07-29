@@ -9,10 +9,14 @@ HARNESS_SRCS:=main.c
 CFLAGS+=-Wall -Werror -I../src -g -O2 -DPAGE_SIZE=$(shell getconf PAGESIZE)
 #-lpthread -lrt
 
+# Change this on the build line to run tests against the installed libraries:
+# make LIBAIO=-laio partcheck
+LIBAIO?=../src/libaio.a
+
 all: $(PROGS)
 
 $(PROGS): %.p: %.t $(HARNESS_SRCS)
-	$(CC) $(CFLAGS) -DTEST_NAME=\"$<\" -o $@ main.c ../src/libaio.a -lpthread
+	$(CC) $(CFLAGS) -DTEST_NAME=\"$<\" -o $@ main.c $(LIBAIO) -lpthread
 
 clean:
 	rm -f $(PROGS) *.o runtests.out rofile wofile rwfile
