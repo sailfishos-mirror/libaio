@@ -41,13 +41,12 @@ int test_main(void)
 	assert(buf != (char *)-1);
 
 	/* Whether PROT_WRITE is readable is arch-dependent.  So compare
-	 * against read result. */
-	res = read(rwfd, buf, SIZE);
+	 * against write() result (to make the kernel read from buf). */
+	res = write(rwfd, buf, SIZE);
 	if (res < 0)
 		res = -errno;
-	status |= attempt_rw(rwfd, buf, SIZE,  0,  READ, res);
-
-	status |= attempt_rw(rwfd, buf, SIZE,  0, WRITE, SIZE);
+	status |= attempt_rw(rwfd, buf, SIZE,  0,  READ, SIZE);
+	status |= attempt_rw(rwfd, buf, SIZE,  0, WRITE, res);
 
 	return status;
 }
