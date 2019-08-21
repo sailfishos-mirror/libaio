@@ -76,7 +76,7 @@ int test_main(void)
 
 		ret = io_setup(1, &ctx);
 		if (ret) {
-			printf("child: io_setup failed\n");
+			printf("child: io_setup failed: %s\n", strerror(-ret));
 			return 1;
 		}
 
@@ -86,7 +86,7 @@ int test_main(void)
 			/* if poll isn't supported, skip the test */
 			if (ret == -EINVAL)
 				return 3;
-			printf("child: io_submit failed\n");
+			printf("child: io_submit failed: %s\n", strerror(-ret));
 			return 1;
 		}
 
@@ -99,7 +99,8 @@ int test_main(void)
 		} while (ret == 0);
 
 		if (ret != -EINTR) {
-			printf("child: io_pgetevents did not set errno to EINTR\n");
+			printf("child: io_pgetevents did not set errno to "
+			       "EINTR: %s\n", strerror(-ret));
 			return 1;
 		}
 
@@ -117,7 +118,7 @@ int test_main(void)
 
 		ret = io_setup(1, &ctx);
 		if (ret) {
-			printf("parent: io_setup failed\n");
+			printf("parent: io_setup failed: %s\n", strerror(-ret));
 			return 1;
 		}
 
@@ -126,7 +127,8 @@ int test_main(void)
 			/* if poll isn't supported, skip the test */
 			if (ret == -EINVAL)
 				return 3;
-			printf("parent: io_submit failed with %d\n", ret);
+			printf("parent: io_submit failed with %d: %s\n",
+			       ret, strerror(-ret));
 			return 1;
 		}
 
@@ -134,7 +136,8 @@ int test_main(void)
 
 		ret = io_pgetevents(ctx, 1, 1, &ev, NULL, &sigmask);
 		if (ret < 0) {
-			printf("parent: io_pgetevents failed\n");
+			printf("parent: io_pgetevents failed: %s\n",
+			       strerror(-ret));
 			return 1;
 		}
 		if (ret != 1) {
