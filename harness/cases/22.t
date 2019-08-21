@@ -98,6 +98,10 @@ int test_main(void)
 			ret = io_pgetevents(ctx, 1, 1, &ev, &to, &sigmask);
 		} while (ret == 0);
 
+		/* SKIP if the syscall has not been implemented. */
+		if (ret == -ENOSYS)
+			return 3;
+
 		if (ret != -EINTR) {
 			printf("child: io_pgetevents did not set errno to "
 			       "EINTR: %s\n", strerror(-ret));
@@ -135,6 +139,9 @@ int test_main(void)
 		kill(p, SIGUSR1);
 
 		ret = io_pgetevents(ctx, 1, 1, &ev, NULL, &sigmask);
+		/* SKIP if the syscall has not been implemented. */
+		if (ret == -ENOSYS)
+			return 3;
 		if (ret < 0) {
 			printf("parent: io_pgetevents failed: %s\n",
 			       strerror(-ret));
