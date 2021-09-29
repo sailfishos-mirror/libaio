@@ -102,8 +102,8 @@ struct io_iocb_poll {
 };	/* result code is the set of result flags or -'ve errno */
 
 struct io_iocb_sockaddr {
-	struct sockaddr *addr;
-	int		len;
+	PADDEDptr(struct sockaddr *addr, __pad1);
+	PADDEDul(len, __pad2);
 };	/* result code is the length of the sockaddr, or -'ve errno */
 
 struct io_iocb_common {
