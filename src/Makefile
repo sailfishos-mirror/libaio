@@ -55,6 +55,7 @@ libaio.a: $(libaio_objs)
 	$(RANLIB) libaio.a
 
 $(libname): $(libaio_sobjs) libaio.map
+	$(CC) $(CFLAGS) -c struct_offsets.c
 	$(CC) $(SO_CFLAGS) -Wl,--version-script=libaio.map -Wl,-soname=$(soname) -o $@ $(libaio_sobjs) $(LINK_FLAGS)
 
 install: $(all_targets)
