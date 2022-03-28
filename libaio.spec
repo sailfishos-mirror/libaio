@@ -1,5 +1,5 @@
 Name: libaio
-Version: 0.3.112
+Version: 0.3.113
 Release: 1
 Summary: Linux-native asynchronous I/O access library
 License: LGPL
@@ -57,6 +57,13 @@ make install DESTDIR=$RPM_BUILD_ROOT prefix=/usr libdir=/%{_libdir}
 %attr(0644,root,root) %{_libdir}/libaio.a
 
 %changelog
+* Mon Mar 28 2022 Jeff Moyer <jmoyer@redhat.com> - 0.3.113-1
+- Fix padding in vector and sockaddr structures on 32 bit (Brett Holman)
+- Add a test case for missed poll events (Eric Biggers)
+- Add loongarch support (Yehui Ren)
+- man page cleanup and fixes (Guillem Jover)
+- assorted test harness fixess (Guillem Jover, Jeff Moyer)
+
 * Mon Oct 22 2018 Jeff Moyer <jmoyer@redhat.com> - 0.3.112-1
 - Add async poll support (Christoph Hellwig)
 - Use canonical DESTDIR= environment variable (Thomas Petazzoni)
