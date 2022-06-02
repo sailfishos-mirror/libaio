@@ -72,7 +72,7 @@ static void fail_errno(const char *format, ...)
 static void *thrproc2(void *arg)
 {
 	for (;;) {
-		off_t offset = 0;
+		off64_t offset = 0;
 
 		pthread_barrier_wait(&barrier);
 		if (exiting)
@@ -92,7 +92,7 @@ static void *thrproc3(void *arg)
 {
 	for (;;) {
 		char c;
-		off_t offset = 0;
+		off64_t offset = 0;
 
 		pthread_barrier_wait(&barrier);
 		if (exiting)
